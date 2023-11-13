@@ -22,6 +22,8 @@
 #include "stb_image.h"
 #include "sphere.h"
 #include "print_text.h"
+#include "curve.h"
+
 
 #include <iostream>
 
@@ -36,23 +38,23 @@ unsigned int loadTexture(char const* path, GLenum textureWrappingModeS, GLenum t
 void bed(Shader& lightingShader, glm::mat4 alTogether, Cube& cube);
 
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+//// settings
+//const unsigned int SCR_WIDTH = 800;
+//const unsigned int SCR_HEIGHT = 600;
 
-// modelling transform
-float rotateAngle_X = 0.0;
-float rotateAngle_Y = 0.0;
-float rotateAngle_Z = 0.0;
-float rotateAxis_X = 0.0;
-float rotateAxis_Y = 0.0;
-float rotateAxis_Z = 1.0;
-float translate_X = 0.0;
-float translate_Y = 0.0;
-float translate_Z = 0.0;
-float scale_X = 0.5;
-float scale_Y = 0.5;
-float scale_Z = 0.5;
+//// modelling transform
+//float rotateAngle_X = 0.0;
+//float rotateAngle_Y = 0.0;
+//float rotateAngle_Z = 0.0;
+//float rotateAxis_X = 0.0;
+//float rotateAxis_Y = 0.0;
+//float rotateAxis_Z = 1.0;
+//float translate_X = 0.0;
+//float translate_Y = 0.0;
+//float translate_Z = 0.0;
+//float scale_X = 0.5;
+//float scale_Y = 0.5;
+//float scale_Z = 0.5;
 
 
 
@@ -91,16 +93,19 @@ float considerble_distance = 0.01f;
 float score = 0;
 
 
-// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
 
-float eyeX = -60.0, eyeY = 25.0, eyeZ = 50.0;//R
-float lookAtX = 1.0, lookAtY = 0.0, lookAtZ = 0.0;
-glm::vec3 V = glm::vec3(0.0f, 1.0f, 0.0f);
-BasicCamera basic_camera(eyeX, eyeY, eyeZ, lookAtX, lookAtY, lookAtZ, V);
+
+
+//// camera
+//Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
+//float lastX = SCR_WIDTH / 2.0f;
+//float lastY = SCR_HEIGHT / 2.0f;
+//bool firstMouse = true;
+//
+//float eyeX = -60.0, eyeY = 25.0, eyeZ = 50.0;//R
+//float lookAtX = 1.0, lookAtY = 0.0, lookAtZ = 0.0;
+//glm::vec3 V = glm::vec3(0.0f, 1.0f, 0.0f);
+//BasicCamera basic_camera(eyeX, eyeY, eyeZ, lookAtX, lookAtY, lookAtZ, V);
 
 // lights
 // positions of the point lights
@@ -397,7 +402,7 @@ void checkScore()
     
     cout<<"Ball distance from ring "<< distance<<endl;
     
-    if(distance<=considerble_distance && ball_del_y)
+    if(distance<=considerble_distance && ball_del_y<0)
     {
         score += 1;
         ball_animation = false;
@@ -570,6 +575,8 @@ int main()
         drawBackboard(cubeBackboard, lightingShaderWithTexture);
 
         drawGallery(triangleGallery, cubeGallery, lightingShaderWithTexture);
+        
+        drawRing(lightingShaderWithTexture,9.6, 2.64,0.5,0);
         
         drawHuman(ourShader, glm:: translate(identityMatrix, glm::vec3(human_x_position, 0.0f, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)));
         

@@ -48,6 +48,7 @@
 		45C54D842AF1CF0C00B10247 /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
 		45C69D7F2B025D3500C2C184 /* print_text.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = print_text.h; sourceTree = "<group>"; };
 		45C69D802B025F3400C2C184 /* ft2build.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
+		45C69DE92B02DF5600C2C184 /* curve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curve.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 				457688C42AEE68DB00F5463F /* pointLight.h */,
 				457688C22AEE68DB00F5463F /* shader.h */,
 				457688CA2AEE68DB00F5463F /* stb_image.h */,
+				45C69DE92B02DF5600C2C184 /* curve.h */,
 				45C54D832AF17D3500B10247 /* triangle.h */,
 				45C69D7F2B025D3500C2C184 /* print_text.h */,
 				457688C82AEE68DB00F5463F /* fragmentShader.fs */,
