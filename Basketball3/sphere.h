@@ -25,12 +25,13 @@ const int MIN_STACK_COUNT = 2;
 class Sphere
 {
 public:
+    glm::vec3 emission;
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;
     float shininess;
     // ctor/dtor
-    Sphere(float radius = 1.0f, int sectorCount = 36, int stackCount = 18, glm::vec3 amb = glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3 diff = glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3 spec = glm::vec3(0.5f, 0.5f, 0.5f), float shiny = 32.0f) : verticesStride(24)
+    Sphere(float radius = 1.0f, int sectorCount = 36, int stackCount = 18, glm::vec3 amb = glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3 diff = glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3 spec = glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3 emission=glm::vec3(1.0f,0.67f,0.0f), float shiny = 32.0f) : verticesStride(24)
     {
         set(radius, sectorCount, stackCount, amb, diff, spec, shiny);
         buildCoordinatesAndIndices();
@@ -148,7 +149,7 @@ public:
     void drawSphere(Shader& lightingShader, glm::mat4 model) const      // draw surface
     {
         lightingShader.use();
-
+        lightingShader.setVec3("material.emission", this->emission);
         lightingShader.setVec3("material.ambient", this->ambient);
         lightingShader.setVec3("material.diffuse", this->diffuse);
         lightingShader.setVec3("material.specular", this->specular);
@@ -166,7 +167,6 @@ public:
         // unbind VAO
         glBindVertexArray(0);
     }
-    
 
 private:
     // member functions

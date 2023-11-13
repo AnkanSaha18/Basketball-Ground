@@ -21,6 +21,7 @@
 #include "triangle.h"
 #include "stb_image.h"
 #include "sphere.h"
+#include "print_text.h"
 
 #include <iostream>
 
@@ -53,12 +54,42 @@ float scale_X = 0.5;
 float scale_Y = 0.5;
 float scale_Z = 0.5;
 
-//Human coordinate
+
+
+//Human information
 float human_x_position = 0.0f;
 float human_z_position = 0.0f;
 float human_speed = 0.005f;
 float horizontal_angle = 0.0f;   // must be in degree
 float vertical_angle = 45.0f;
+
+
+//Ball information
+float ball_x_position = 0.0f;
+float ball_y_position = 0.0f;
+float ball_z_position = 0.0f;
+float ball_velocity = 0.0f;         // unit: m/s
+float ball_del_x = 0.0f;
+float ball_del_y = 0.0f;
+float ball_del_z = 0.0f;
+float ball_animation = false;
+float ball_animation_speed = 0.03f;
+
+const float g = .09; // unit: m/s^2
+float u=0.f;
+
+
+//Ring position
+float ring_x_position = 1.3f;
+float ring_y_position = 0.3f;
+float ring_z_position = 0.0f;
+
+//Error
+float considerble_distance = 0.01f;
+
+//Scoring
+float score = 0;
+
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
@@ -143,8 +174,14 @@ float lastFrame = 0.0f;
 //path2[100];
 //void fn (count, path1, path2) {
 //    for i conunt:
-//        
 //}
+
+void delay(float secs)
+{
+    float end = clock() / CLOCKS_PER_SEC + secs;
+    while ((clock() / CLOCKS_PER_SEC) < end);
+}
+
 
 void exampleDrawingFunction(Cube &cube,string &diffuseMapPath, string &specularMapPath, Shader &lightingShaderWithTexture)
 {
@@ -294,7 +331,9 @@ void drawHuman(Shader& shader, glm::mat4 allTogether){
 void drawDirection(Shader& lightingShader)
 {
     float gap = 0.05;
+    float size_difference = 0.001;
     float height_of_ball = 0.1f;
+    
     
     Sphere sphere1 = Sphere();
     glm::mat4 model, identityMatrix;
@@ -309,7 +348,8 @@ void drawDirection(Shader& lightingShader)
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere2 = glm::mat4(1.0f);
     modelForSphere2 = 
-    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*2, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*2, 0.0f, 0.0f)) * 
+        glm::scale(identityMatrix, glm::vec3(0.01f-size_difference, 0.01f-size_difference, 0.01f-size_difference));
     sphere2.drawSphere(lightingShader, modelForSphere2);
 
     
@@ -317,7 +357,8 @@ void drawDirection(Shader& lightingShader)
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere3 = glm::mat4(1.0f);
     modelForSphere3 = 
-    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*3, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*3, 0.0f, 0.0f)) * 
+        glm::scale(identityMatrix, glm::vec3(0.01f-size_difference*2, 0.01f-size_difference*2, 0.01f-size_difference*2));
     sphere3.drawSphere(lightingShader, modelForSphere3);
 
     
@@ -325,7 +366,8 @@ void drawDirection(Shader& lightingShader)
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere4 = glm::mat4(1.0f);
     modelForSphere4 =
-    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*4, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*4, 0.0f, 0.0f)) * 
+        glm::scale(identityMatrix, glm::vec3(0.01f-size_difference*3, 0.01f-size_difference*3, 0.01f-size_difference*3));
     sphere4.drawSphere(lightingShader, modelForSphere4);
     
     
@@ -333,9 +375,33 @@ void drawDirection(Shader& lightingShader)
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere5 = glm::mat4(1.0f);
     modelForSphere5 =
-    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*5, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*5, 0.0f, 0.0f)) * 
+        glm::scale(identityMatrix, glm::vec3(0.01f-size_difference*4, 0.01f-size_difference*4, 0.01f-size_difference*4));
     sphere5.drawSphere(lightingShader, modelForSphere5);
     
+}
+
+void drawBasketBall(Shader& lightingShader)
+{
+    Sphere ball = Sphere(1, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.5f);
+    
+    glm::mat4 model, identityMatrix;
+    glm::mat4 modelForBall = glm::mat4(1.0f);
+    modelForBall = glm::translate(model, glm::vec3(ball_x_position, ball_y_position, ball_z_position)) * glm::scale(identityMatrix, glm::vec3(0.04f, 0.04f, 0.04f));
+    ball.drawSphere(lightingShader, modelForBall);
+}
+
+void checkScore()
+{
+    float distance = sqrt((ring_x_position-ball_x_position)*(ring_x_position-ball_x_position) + (ring_y_position-ball_y_position)*(ring_y_position-ball_y_position) + (ring_z_position-ball_z_position)*(ring_z_position-ball_z_position));
+    
+    cout<<"Ball distance from ring "<< distance<<endl;
+    
+    if(distance<=considerble_distance && ball_del_y)
+    {
+        score += 1;
+        ball_animation = false;
+    }
 }
 
 
@@ -385,7 +451,7 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile our shader zprogram //R
+    // build and compile our shader zprogram
     // ------------------------------------
     Shader lightingShaderWithTexture("/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/vertexShaderForPhongShadingWithTexture.vs", "/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/fragmentShaderForPhongShadingWithTexture.fs");
     Shader ourShader("/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/vertexShader.vs", "/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/fragmentShader.fs");
@@ -507,22 +573,73 @@ int main()
         
         drawHuman(ourShader, glm:: translate(identityMatrix, glm::vec3(human_x_position, 0.0f, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)));
         
-//        Drawing Ball
-        glm::mat4 modelForSphere = glm::mat4(1.0f);
-        modelForSphere = glm::translate(model, glm::vec3(human_x_position*2, 0.2f, human_z_position*2)) * glm::scale(identityMatrix, glm::vec3(0.04f, 0.04f, 0.04f));
-        ball.drawSphere(lightingShaderWithTexture, modelForSphere);
-        cout<<human_x_position<<"  "<<human_z_position<<endl;
-        
-        
-        
-        
-        
         
 //        Drawing Ball Direction
         drawDirection(lightingShaderWithTexture);
-//        glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, 30.0f, glm::vec3(0.0f, 0.0f, 1.0f))
+        
         
 
+////        Setting Ball Position
+//        if(ball_animation==true)
+//        {
+//            ball_del_x = ball_velocity * cos(vertical_angle) * ball_animation_speed;
+////            ball_del_y = ball_velocity * sin(vertical_angle) * ball_animation_speed;
+//            ball_del_z = ball_velocity * cos(horizontal_angle) * ball_animation_speed;
+//            
+//            ball_x_position += ball_del_x;
+////            ball_y_position += ball_del_y;
+//            ball_z_position += ball_del_z;
+//        }
+        if (ball_animation==false) {
+            ball_x_position = human_x_position;
+            ball_y_position = 0.1;
+            ball_z_position = human_z_position;
+        }
+        if (ball_animation==true)
+        {
+//             for x axis
+            ball_del_x = ball_velocity * cos(glm::radians(vertical_angle)) * cos(glm::radians(horizontal_angle)) * ball_animation_speed;
+            ball_x_position += ball_del_x;
+            
+//            for y axis
+            ball_del_y = (u-0.5f*g)*ball_animation_speed;
+            u -= g*ball_animation_speed;
+            ball_y_position += ball_del_y;
+            
+//            for z axis
+            ball_del_z = -ball_velocity * cos(glm::radians(vertical_angle)) * sin(glm::radians(horizontal_angle)) * ball_animation_speed;
+            ball_z_position += ball_del_z;
+            
+            if(ball_y_position<=0.04)
+            {
+                ball_animation=false;
+                delay(2.0);
+            }
+        }
+        
+        
+        
+        drawBasketBall(lightingShaderWithTexture);
+        
+        checkScore();
+        
+        
+        // Display informations
+        
+        
+        cout<<"ball position "<<ball_x_position<<"  "<<ball_y_position<<"  "<<ball_z_position<<endl;
+        cout<<"ball velocity "<<ball_velocity<<"m/s"<<endl;
+        cout<<"horizontal angle "<<horizontal_angle<<"      "<< cos(glm::radians(horizontal_angle))<<endl;
+        cout<<"verticle angle "<<vertical_angle<<"      "<<cos(glm::radians(vertical_angle))<<"  "<<sin(glm::radians(vertical_angle))<<endl;
+        cout<<"del Y "<<ball_del_y<<endl;
+        cout<<"Score:  "<<score<<endl;
+        cout<<"ball animation "<<ball_animation<<endl;
+        
+
+        
+        
+        
+        
         // also draw the lamp object(s)
         ourShader.use();
         ourShader.setMat4("projection", projection);
@@ -578,6 +695,8 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(RIGHT, deltaTime);
         human_z_position += human_speed;
     }
+    
+    // horizontal angle change control
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
         horizontal_angle += 0.5;
@@ -586,6 +705,8 @@ void processInput(GLFWwindow* window)
     {
         horizontal_angle -= 0.5;
     }
+    
+    // vertical angle change control
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
         vertical_angle += 0.5;
@@ -594,7 +715,31 @@ void processInput(GLFWwindow* window)
     {
         vertical_angle -= 0.5;
     }
+    
+    // ball velocity change control
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+        ball_velocity += 0.001;
+    }
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        ball_velocity -= 0.001;
+    }
+    
+    // fire ball
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        delay(0.5f);
+        ball_animation = !ball_animation;
+        
+        ball_x_position = human_x_position;
+        ball_y_position = 0.1f;
+        ball_z_position = human_z_position;
+        
+        u = ball_velocity*sin(glm::radians(vertical_angle));
+    }
 
+    
     
     
     
@@ -679,21 +824,31 @@ void processInput(GLFWwindow* window)
     
     
     
-    if(horizontal_angle >= 180)
+    if(horizontal_angle >= 90)
     {
-        horizontal_angle = -360 - horizontal_angle;
+//        horizontal_angle = -360 - horizontal_angle;
+        horizontal_angle = 90;
     }
-    if(horizontal_angle <= -180)
+    if(horizontal_angle <= -90)
     {
-        horizontal_angle = 360 + horizontal_angle;
+//        horizontal_angle = 360 + horizontal_angle;
+        horizontal_angle = -90;
     }
-    if(vertical_angle >= 80)
+    if(vertical_angle >= 70)
     {
-        vertical_angle = 80;
+        vertical_angle = 70;
     }
     if(vertical_angle < 0)
     {
         vertical_angle = 0;
+    }
+    if(ball_velocity >= 5)
+    {
+        ball_velocity = 5;
+    }
+    if(ball_velocity < 0)
+    {
+        ball_velocity = 0;
     }
 
 }
