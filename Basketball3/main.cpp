@@ -58,6 +58,7 @@ float human_x_position = 0.0f;
 float human_z_position = 0.0f;
 float human_speed = 0.005f;
 float horizontal_angle = 0.0f;   // must be in degree
+float vertical_angle = 45.0f;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
@@ -247,9 +248,7 @@ void drawGallery(Triangle &triangle, Cube &cube, Shader &lightingShaderWithTextu
 }
 
 
-void drawHuman(Shader& shader, glm::mat4 alTogether){
-
-
+void drawHuman(Shader& shader, glm::mat4 allTogether){
     glm::mat4 identityMatrix = glm::mat4(1.0f);
     glm::mat4 translateMatrix, rotateXMatrix, rotateYMatrix, rotateZMatrix, scaleMatrix, model;
     Cube cube(glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, 0.5, 0.5), 30);
@@ -259,38 +258,84 @@ void drawHuman(Shader& shader, glm::mat4 alTogether){
     //cube1 (Head)
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.025f, 0.15f, -0.025f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.05f, 0.05f, 0.05f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 1.0f, 0.0f, 0.0f);
     
     
     //cube2 (Body)
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.015f, 0.05f, -0.05f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.03f, 0.1f, 0.1f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 0.0f, 1.0f, 0.0f);
     
     //cube3 (Hands)
     translateMatrix = glm::translate(identityMatrix, glm::vec3(0.0f, 0.05f, 0.05f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.02f, 0.07f, 0.02f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 0.0f, 0.0f, 1.0f);
 
     translateMatrix = glm::translate(identityMatrix, glm::vec3(0.0f, 0.05f, -0.05f-0.02f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.02f, 0.07f, 0.02f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 0.0f, 0.0f, 1.0f);
 
     //cube4 (Legs)
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.015f, 0.0f, 0.01f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.03f, 0.05f, 0.03f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 1.0f, 1.0f, 0.0f);
     
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.015f, 0.0f, -0.01f-0.03f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.03f, 0.05f, 0.03f));
-    model = alTogether * translateMatrix * scaleMatrix;
+    model = allTogether * translateMatrix * scaleMatrix;
     cube.drawCube(shader, model, 1.0f, 1.0f, 0.0f);
+}
 
+void drawDirection(Shader& lightingShader)
+{
+    float gap = 0.05;
+    float height_of_ball = 0.1f;
+    
+    Sphere sphere1 = Sphere();
+    glm::mat4 model, identityMatrix;
+    glm::mat4 modelForSphere1 = glm::mat4(1.0f);
+    modelForSphere1 =
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap, 0.0f, 0.0f)) *
+        glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    sphere1.drawSphere(lightingShader, modelForSphere1);
+    
+    
+    Sphere sphere2 = Sphere();
+    model = glm::mat4(1.0f);
+    glm::mat4 modelForSphere2 = glm::mat4(1.0f);
+    modelForSphere2 = 
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*2, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    sphere2.drawSphere(lightingShader, modelForSphere2);
+
+    
+    Sphere sphere3 = Sphere();
+    model = glm::mat4(1.0f);
+    glm::mat4 modelForSphere3 = glm::mat4(1.0f);
+    modelForSphere3 = 
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*3, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    sphere3.drawSphere(lightingShader, modelForSphere3);
+
+    
+    Sphere sphere4 = Sphere();
+    model = glm::mat4(1.0f);
+    glm::mat4 modelForSphere4 = glm::mat4(1.0f);
+    modelForSphere4 =
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*4, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    sphere4.drawSphere(lightingShader, modelForSphere4);
+    
+    
+    Sphere sphere5 = Sphere();
+    model = glm::mat4(1.0f);
+    glm::mat4 modelForSphere5 = glm::mat4(1.0f);
+    modelForSphere5 =
+    glm::translate(model, glm::vec3(human_x_position, height_of_ball, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, vertical_angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(model, glm::vec3(gap*5, 0.0f, 0.0f)) * glm::scale(identityMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+    sphere5.drawSphere(lightingShader, modelForSphere5);
+    
 }
 
 
@@ -326,7 +371,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -452,6 +497,8 @@ int main()
         
         
         
+//        Drawing Everything
+        
         drawCourt(cubeCourt, lightingShaderWithTexture);
 
         drawBackboard(cubeBackboard, lightingShaderWithTexture);
@@ -459,24 +506,21 @@ int main()
         drawGallery(triangleGallery, cubeGallery, lightingShaderWithTexture);
         
         drawHuman(ourShader, glm:: translate(identityMatrix, glm::vec3(human_x_position, 0.0f, human_z_position)) * glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)));
-
         
-
-//        exampleDrawingFunction(cube,diffuseMapPath,specularMapPath, lightingShaderWithTexture);
-        
-        
-        
-        
-        
-        
-        
-        
-        
+//        Drawing Ball
         glm::mat4 modelForSphere = glm::mat4(1.0f);
         modelForSphere = glm::translate(model, glm::vec3(human_x_position*2, 0.2f, human_z_position*2)) * glm::scale(identityMatrix, glm::vec3(0.04f, 0.04f, 0.04f));
         ball.drawSphere(lightingShaderWithTexture, modelForSphere);
         cout<<human_x_position<<"  "<<human_z_position<<endl;
         
+        
+        
+        
+        
+        
+//        Drawing Ball Direction
+        drawDirection(lightingShaderWithTexture);
+//        glm::rotate(identityMatrix, horizontal_angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(identityMatrix, 30.0f, glm::vec3(0.0f, 0.0f, 1.0f))
         
 
         // also draw the lamp object(s)
@@ -534,14 +578,24 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(RIGHT, deltaTime);
         human_z_position += human_speed;
     }
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
         horizontal_angle += 0.5;
     }
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
         horizontal_angle -= 0.5;
     }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        vertical_angle += 0.5;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        vertical_angle -= 0.5;
+    }
+
+    
     
     
 
@@ -633,6 +687,15 @@ void processInput(GLFWwindow* window)
     {
         horizontal_angle = 360 + horizontal_angle;
     }
+    if(vertical_angle >= 80)
+    {
+        vertical_angle = 80;
+    }
+    if(vertical_angle < 0)
+    {
+        vertical_angle = 0;
+    }
+
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
