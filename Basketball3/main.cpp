@@ -24,7 +24,6 @@
 #include "print_text.h"
 #include "curve.h"
 
-
 #include <iostream>
 
 using namespace std;
@@ -61,7 +60,7 @@ void bed(Shader& lightingShader, glm::mat4 alTogether, Cube& cube);
 //Human information
 float human_x_position = 0.0f;
 float human_z_position = 0.0f;
-float human_speed = 0.005f;
+float human_speed = 0.001f;
 float horizontal_angle = 0.0f;   // must be in degree
 float vertical_angle = 45.0f;
 
@@ -70,7 +69,7 @@ float vertical_angle = 45.0f;
 float ball_x_position = 0.0f;
 float ball_y_position = 0.0f;
 float ball_z_position = 0.0f;
-float ball_velocity = 0.0f;         // unit: m/s
+float ball_velocity = 0.411998f;         // unit: m/s
 float ball_del_x = 0.0f;
 float ball_del_y = 0.0f;
 float ball_del_z = 0.0f;
@@ -388,7 +387,7 @@ void drawDirection(Shader& lightingShader)
 
 void drawBasketBall(Shader& lightingShader)
 {
-    Sphere ball = Sphere(1, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.5f);
+    Sphere ball = Sphere(1, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f));
     
     glm::mat4 model, identityMatrix;
     glm::mat4 modelForBall = glm::mat4(1.0f);
@@ -406,6 +405,8 @@ void checkScore()
     {
         score += 1;
         ball_animation = false;
+//        vertical_angle = 0;
+//        horizontal_angle = 0;
     }
 }
 
@@ -706,21 +707,21 @@ void processInput(GLFWwindow* window)
     // horizontal angle change control
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        horizontal_angle += 0.5;
+        horizontal_angle += 0.1;
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        horizontal_angle -= 0.5;
+        horizontal_angle -= 0.1;
     }
     
     // vertical angle change control
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
-        vertical_angle += 0.5;
+        vertical_angle += 0.1;
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
-        vertical_angle -= 0.5;
+        vertical_angle -= 0.1;
     }
     
     // ball velocity change control
