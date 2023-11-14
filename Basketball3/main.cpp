@@ -17,6 +17,7 @@
 #include "camera.h"
 #include "basic_camera.h"
 #include "pointLight.h"
+#include "directionalLight.h"
 #include "cube.h"
 #include "triangle.h"
 #include "stb_image.h"
@@ -154,6 +155,14 @@ PointLight pointlight4(
     0.07f, //k_q
     4       // light number
 );
+
+DirLight dirLight(
+    -0.2f, -1.0f, -0.3f,
+    0.3f, 0.3f, 0.3f,
+    0.65f,0.65f,0.65f,     // diffuse
+    0.5f, 0.5f, 0.5f
+);
+
 
 
 // light settings
@@ -562,6 +571,9 @@ int main()
         pointlight3.setUpPointLight(lightingShaderWithTexture);
         // point light 4
         pointlight4.setUpPointLight(lightingShaderWithTexture);
+        
+        //Directional light
+        dirLight.setUpDirLight(lightingShaderWithTexture);
 
 //        glm::mat4 modelMatrixForContainer = glm::mat4(1.0f);
 //        modelMatrixForContainer = glm::translate(model, glm::vec3(-0.45f, -0.4f, -2.8f));
@@ -587,17 +599,7 @@ int main()
         
         
 
-////        Setting Ball Position
-//        if(ball_animation==true)
-//        {
-//            ball_del_x = ball_velocity * cos(vertical_angle) * ball_animation_speed;
-////            ball_del_y = ball_velocity * sin(vertical_angle) * ball_animation_speed;
-//            ball_del_z = ball_velocity * cos(horizontal_angle) * ball_animation_speed;
-//            
-//            ball_x_position += ball_del_x;
-////            ball_y_position += ball_del_y;
-//            ball_z_position += ball_del_z;
-//        }
+//       Setting Ball Position
         if (ball_animation==false) {
             ball_x_position = human_x_position;
             ball_y_position = 0.1;
@@ -880,6 +882,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             pointlight3.turnOn();
             pointlight4.turnOn();
             pointLightOn = !pointLightOn;
+        }
+    }
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+    {
+        if (dirLightOn)
+        {
+            dirLight.turnOff();
+            dirLightOn = !dirLightOn;
+        }
+        else
+        {
+            dirLight.turnOn();
+            dirLightOn = !dirLightOn;
         }
     }
 
