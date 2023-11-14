@@ -18,6 +18,7 @@
 #include "basic_camera.h"
 #include "pointLight.h"
 #include "directionalLight.h"
+#include "SpotLight.h"
 #include "cube.h"
 #include "triangle.h"
 #include "stb_image.h"
@@ -163,10 +164,24 @@ DirLight dirLight(
     0.5f, 0.5f, 0.5f
 );
 
+SpotLight spotLight(
+    0.0f, 2.0f, 0.0f,        // co-ordinate of spotlight
+    0.0f, -1.0f, 0.0f,      // Direction of spot light
+    1.0f, 0.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f,
+    0.09f,
+    0.032f,
+    12.5f,
+    15.0f
+);
+
+
 
 
 // light settings
-bool dirLightOn = true;
+bool dirLightOn = false;
 bool pointLightOn = true;
 bool spotLightOn = true;
 bool ambientToggle = true;
@@ -419,6 +434,12 @@ void checkScore()
     }
 }
 
+void changeSpotLight(Shader& lightingShaderWithTexture)
+{
+    spotLight.direction = glm::vec3(human_x_position/2, -1, human_z_position/2);
+    spotLight.setUpSpotLight(lightingShaderWithTexture);
+}
+
 
 
 
@@ -572,8 +593,11 @@ int main()
         // point light 4
         pointlight4.setUpPointLight(lightingShaderWithTexture);
         
-        //Directional light
+        // Directional light
         dirLight.setUpDirLight(lightingShaderWithTexture);
+
+        // Spot light
+        spotLight.setUpSpotLight(lightingShaderWithTexture);
 
 //        glm::mat4 modelMatrixForContainer = glm::mat4(1.0f);
 //        modelMatrixForContainer = glm::translate(model, glm::vec3(-0.45f, -0.4f, -2.8f));
@@ -632,6 +656,8 @@ int main()
         drawBasketBall(lightingShaderWithTexture);
         
         checkScore();
+        
+        changeSpotLight(lightingShaderWithTexture);
         
         
         // Display informations
@@ -895,6 +921,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         {
             dirLight.turnOn();
             dirLightOn = !dirLightOn;
+        }
+    }
+    if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+    {
+        if (spotLightOn)
+        {
+            spotLight.turnOff();
+            spotLightOn = !spotLightOn;
+        }
+        else
+        {
+            spotLight.turnOn();
+            spotLightOn = !spotLightOn;
         }
     }
 

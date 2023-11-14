@@ -78,7 +78,7 @@ void main()
     
 //     ------------------Problom at this spot light--------------------
     result = result+CalcDirLight(dirLight, N, V);
-//    result = result+CalcSpotLight(spotLight, N, FragPos, V);
+    result = result+CalcSpotLight(spotLight, N, FragPos, V);
     FragColor = vec4(result, 1.0);
 }
 
