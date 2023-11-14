@@ -36,7 +36,6 @@
 		457688C22AEE68DB00F5463F /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		457688C32AEE68DB00F5463F /* vertexShaderForPhongShadingWithTexture.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertexShaderForPhongShadingWithTexture.vs; sourceTree = "<group>"; };
 		457688C42AEE68DB00F5463F /* pointLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointLight.h; sourceTree = "<group>"; };
-		457688C52AEE68DB00F5463F /* basic_camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_camera.h; sourceTree = "<group>"; };
 		457688C62AEE68DB00F5463F /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
 		457688C72AEE68DB00F5463F /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		457688C82AEE68DB00F5463F /* fragmentShader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fragmentShader.fs; sourceTree = "<group>"; };
@@ -47,10 +46,10 @@
 		45C54D832AF17D3500B10247 /* triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triangle.h; sourceTree = "<group>"; };
 		45C54D842AF1CF0C00B10247 /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
 		45C69D7F2B025D3500C2C184 /* print_text.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = print_text.h; sourceTree = "<group>"; };
-		45C69D802B025F3400C2C184 /* ft2build.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
 		45C69DE92B02DF5600C2C184 /* curve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curve.h; sourceTree = "<group>"; };
 		45C69DEB2B038CDA00C2C184 /* directionalLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = directionalLight.h; sourceTree = "<group>"; };
 		45C69DEC2B0390B500C2C184 /* SpotLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotLight.h; sourceTree = "<group>"; };
+		45C69E552B03BA7E00C2C184 /* basic_camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = basic_camera.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,9 +86,8 @@
 			isa = PBXGroup;
 			children = (
 				457688D12AF019F500F5463F /* image */,
-				457688C52AEE68DB00F5463F /* basic_camera.h */,
 				457688C62AEE68DB00F5463F /* camera.h */,
-				45C69D802B025F3400C2C184 /* ft2build.h */,
+				45C69E552B03BA7E00C2C184 /* basic_camera.h */,
 				457688CC2AEE68DB00F5463F /* cube.h */,
 				45C54D842AF1CF0C00B10247 /* sphere.h */,
 				457688C42AEE68DB00F5463F /* pointLight.h */,
@@ -305,7 +303,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/glfw/3.3.8/include;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/glfw/3.3.8/include,
+					"\"/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/freetype-2.13.2/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/glfw/3.3.8/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -315,7 +316,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/glfw/3.3.8/include;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/glfw/3.3.8/include,
+					"\"/Users/ankansaha/Academic Courses/4-2/Lab/Graphics/Lab 4/Work/Basketball3/Basketball3/freetype-2.13.2/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = /opt/homebrew/Cellar/glfw/3.3.8/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
