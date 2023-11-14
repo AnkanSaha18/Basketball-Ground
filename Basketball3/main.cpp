@@ -348,12 +348,12 @@ void drawHuman(Shader& shader, glm::mat4 allTogether){
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.015f, 0.0f, 0.01f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.03f, 0.05f, 0.03f));
     model = allTogether * translateMatrix * scaleMatrix;
-    cube.drawCube(shader, model, 1.0f, 1.0f, 0.0f);
+    cube.drawCube(shader, model, 0.5f, 0.3f, 0.1f);
     
     translateMatrix = glm::translate(identityMatrix, glm::vec3(-0.015f, 0.0f, -0.01f-0.03f));
     scaleMatrix = glm::scale(identityMatrix, glm::vec3(0.03f, 0.05f, 0.03f));
     model = allTogether * translateMatrix * scaleMatrix;
-    cube.drawCube(shader, model, 1.0f, 1.0f, 0.0f);
+    cube.drawCube(shader, model, 0.5f, 0.3f, 0.1f);
 }
 
 void drawDirection(Shader& lightingShader)
@@ -363,7 +363,7 @@ void drawDirection(Shader& lightingShader)
     float height_of_ball = 0.1f;
     
     
-    Sphere sphere1 = Sphere();
+    Sphere sphere1 = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
     glm::mat4 model, identityMatrix;
     glm::mat4 modelForSphere1 = glm::mat4(1.0f);
     modelForSphere1 =
@@ -372,7 +372,7 @@ void drawDirection(Shader& lightingShader)
     sphere1.drawSphere(lightingShader, modelForSphere1);
     
     
-    Sphere sphere2 = Sphere();
+    Sphere sphere2 = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere2 = glm::mat4(1.0f);
     modelForSphere2 = 
@@ -381,7 +381,7 @@ void drawDirection(Shader& lightingShader)
     sphere2.drawSphere(lightingShader, modelForSphere2);
 
     
-    Sphere sphere3 = Sphere();
+    Sphere sphere3 = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere3 = glm::mat4(1.0f);
     modelForSphere3 = 
@@ -390,7 +390,7 @@ void drawDirection(Shader& lightingShader)
     sphere3.drawSphere(lightingShader, modelForSphere3);
 
     
-    Sphere sphere4 = Sphere();
+    Sphere sphere4 = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere4 = glm::mat4(1.0f);
     modelForSphere4 =
@@ -399,7 +399,7 @@ void drawDirection(Shader& lightingShader)
     sphere4.drawSphere(lightingShader, modelForSphere4);
     
     
-    Sphere sphere5 = Sphere();
+    Sphere sphere5 = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
     model = glm::mat4(1.0f);
     glm::mat4 modelForSphere5 = glm::mat4(1.0f);
     modelForSphere5 =
@@ -411,7 +411,7 @@ void drawDirection(Shader& lightingShader)
 
 void drawBasketBall(Shader& lightingShader)
 {
-    Sphere ball = Sphere(1, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f));
+    Sphere ball = Sphere(1, 36, 18, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), 100);
     
     glm::mat4 model, identityMatrix;
     glm::mat4 modelForBall = glm::mat4(1.0f);
