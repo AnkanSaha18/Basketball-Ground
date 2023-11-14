@@ -111,10 +111,10 @@ float score = 0;
 // lights
 // positions of the point lights
 glm::vec3 pointLightPositions[] = {
-    glm::vec3(1.3f,  0.5f,  1.3f),
-    glm::vec3(1.3f,  0.5f,  -1.3f),
-    glm::vec3(-1.3f,  0.5f,  1.3f),
-    glm::vec3(-1.3f,  0.5f,  -1.3f)
+    glm::vec3(1.3f,  0.2f,  1.3f),
+    glm::vec3(1.3f,  0.2f,  -1.3f),
+    glm::vec3(-1.3f,  0.2f,  1.3f),
+    glm::vec3(-1.3f,  0.2f,  -1.3f)
 };
 PointLight pointlight1(
     pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z,  // position
@@ -181,7 +181,7 @@ SpotLight spotLight(
 
 
 // light settings
-bool dirLightOn = false;
+bool dirLightOn = true;
 bool pointLightOn = true;
 bool spotLightOn = true;
 bool ambientToggle = true;
